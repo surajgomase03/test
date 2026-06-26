@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "jest",
+    "lint": "eslint src tests",
+    "build": "mkdir build && cp -r src package.json build"
+  }
+}
