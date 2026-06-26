@@ -8,6 +8,11 @@ jobs:
     steps:
       - name: Checkout Git Repo
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
       - name: install dependecies
         run: npm ci
       - name: Lint
