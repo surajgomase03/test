@@ -28,5 +28,14 @@ jobs:
           path: |
             files/
             package.json
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifacts@v4
+        with:
+           name: files
+      - name: Content of outpurt
+        run: ls
             
  
