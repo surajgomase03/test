@@ -30,11 +30,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifacts
+      - name: Download artifact
         uses: actions/download-artifacts@v4
         with:
            name: files
-      - name: Content of outpurt
+      - name: Content of output
         run: ls
             
  
