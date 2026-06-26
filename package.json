@@ -4,5 +4,12 @@
     "test": "jest",
     "lint": "eslint src tests",
     "build": "mkdir build && cp -r src package.json build"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^10.5.0",
+    "jest": "^30.4.2"
   }
 }
