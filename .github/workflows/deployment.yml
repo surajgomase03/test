@@ -77,6 +77,10 @@ jobs:
     steps:
       - name: share the package
         run: echo "Share the Package"
+  reusable_workflow:
+    uses: ./.github/workflows/reusable.yml 
+    with:
+      artifact-name: files
     
   report:
     needs:
