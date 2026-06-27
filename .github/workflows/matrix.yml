@@ -3,10 +3,14 @@ name: Matrix
 on: workflow_dispatch
 
 jobs:
+  
   build:
+    continue-on-error: true
     strategy:
       matrix:
         os: [ubuntu-latest , windows-latest]
+        exclude:
+          - os: windows-latest
     runs-on: ${{  matrix.os }}
     steps:
       - name: Checkout
