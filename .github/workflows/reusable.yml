@@ -1,0 +1,10 @@
+name: reusable
+
+on: workflow_call
+
+jobs:
+    Show:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Output
+          run: echo " call this yml from another actions"
