@@ -15,7 +15,7 @@ jobs:
           cache: npm
 
       - name: cache
-        uses: action/cache@v4
+        uses: actions/cache@v4
         with: 
           path: ~./npm
           key: my-${{ hashFiles('**/package-lock.json') }}
@@ -46,7 +46,7 @@ jobs:
           node-version: 20
           cache: npm
       - name: cache
-        uses: action/cache@v4
+        uses: actions/cache@v4
         with: 
           path: ~./npm
           key: my-${{ hashFiles('**/package-lock.json') }}
