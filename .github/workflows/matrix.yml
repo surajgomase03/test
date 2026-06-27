@@ -19,4 +19,5 @@ jobs:
         uses: actions/setup-node@v4
         with:
             node-version: 20
-      
+  reusable_workflow:
+    uses: ./.github/workflows/reusable.yml 
