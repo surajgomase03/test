@@ -21,7 +21,7 @@ jobs:
               name: myfiles
               path: build
           - name: Push artifacts to s3
-            uses: ./.guthub/actions/docker
+            uses: ./.github/actions/docker
             with: 
               bucket: mybucket
               file: build
