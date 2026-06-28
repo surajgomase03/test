@@ -1,0 +1,22 @@
+name: build and cache
+description: build and install all
+runs:
+  using: composite
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: npm
+    - name: cache
+      uses: actions/cache@v4
+      id: cache
+      with: 
+        path: node_modules
+        key: my-${{ hashFiles('**/package-lock.json') }}
+
+    - name: install dependecies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci
+      shell: bash  #Must when you mention run 
+

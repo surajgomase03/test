@@ -1,0 +1,14 @@
+name: Docker
+
+on: workflow_call
+
+jobs:
+    Build:
+        runs-on: ubuntu-latest
+        steps: 
+          - name: Checkout
+            uses: actions/checkout@v4
+        
+          - name: Setup node and dependecies
+            uses: ./.github/actions
+          

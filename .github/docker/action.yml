@@ -1,0 +1,20 @@
+name: Python Action
+description: Python
+
+inputs:
+  bucket:
+    required: true
+    description: Provide bucket name
+  file:
+    required: true
+    description: Provide file name
+  key: 
+    required: true
+    description: Provide kry
+    
+  
+
+runs:
+  using: docker
+  image: Dockerfile
+  
