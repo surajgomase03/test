@@ -10,7 +10,7 @@ COPY entrypoint.sh .
 
 COPY upload.py .
 
-RUN chmod 777 *.sh
+RUN chmod 777 *.py
 
 RUN ls -lrt 
 
