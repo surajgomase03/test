@@ -11,4 +11,19 @@ jobs:
         
           - name: Setup node and dependecies
             uses: ./.github/actions
+
+          - name: Build the code
+            run: npm run build
+          
+          - name: Download artifacts
+            uses: actions/download-artifacts@v4
+            with: 
+              name: myfiles
+              path: build
+          - name: Push artifacts to s3
+            uses: ./.guthub/docker
+            with: 
+              bucket: mybucket
+              file: build
+              key: test
           
