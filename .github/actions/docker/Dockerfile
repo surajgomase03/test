@@ -12,6 +12,6 @@ COPY upload.py .
 
 RUN chmod 777 *.py
 
-RUN ls -lrt 
+RUN pwd 
 
 CMD [ "python" , "upload.py" ]
