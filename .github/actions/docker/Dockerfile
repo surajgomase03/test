@@ -14,4 +14,4 @@ RUN chmod 777 *.py
 
 RUN pwd 
 
-CMD [ "python" , "upload.py" ]
+CMD [ "python" , "/app/upload.py" ]
