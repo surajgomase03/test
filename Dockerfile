@@ -1,13 +1,13 @@
-FROM node:20-alpine
+FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY requirements.txt .
 
-RUN npm install
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 3000
+RUN chmod 777 *.sh
 
-CMD ["npm", "start"]
+ENTRYPOINT [ "./entrypoint.sh" ]
