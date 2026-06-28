@@ -14,4 +14,4 @@ RUN chmod 777 *.sh
 
 RUN ls -lrt 
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+CMD [ "python" , "upload.py" ]
