@@ -1,186 +1,277 @@
-# GitHub Actions Practice - Issues & Solutions
+# GitHub Actions Complete Handbook (Mistakes, Fixes & Interview Notes)
 
-## Project
+# Author
 
-Node.js + Express + Jest + ESLint + GitHub Actions
-
----
-
-# Issue 1: `npm ci` Failed
-
-## Error
-
-```text
-npm ERR! code EUSAGE
-
-The `npm ci` command can only install with an existing package-lock.json
-```
-
-## Cause
-
-`npm ci` requires an existing `package-lock.json`.
-
-Your repository contained:
-
-```
-package.json
-src/
-tests/
-```
-
-but was missing
-
-```
-package-lock.json
-```
+Suraj Gomase
 
 ---
 
-## Solution
+# 1. Node.js Project Setup
 
-Generate the lock file locally.
+* Project Structure
+* package.json
+* package-lock.json
+* Express App
+* Jest
+* ESLint
+* Build Script
+* Build Directory
+* README
+
+---
+
+# 2. GitHub Actions
+
+* Workflow
+* Events
+* Jobs
+* Steps
+* Runner
+* Matrix
+* Environment Variables
+* Secrets
+* Variables
+* Outputs
+* needs
+* strategy
+* concurrency
+* permissions
+* reusable workflow
+* composite action
+
+---
+
+# 3. GitLab CI
+
+* stages
+* jobs
+* artifacts
+* cache
+* rules
+* dependencies
+* only
+* except
+* variables
+
+---
+
+# 4. Docker
+
+* Basic Dockerfile
+* Multi-stage Dockerfile
+* Production Dockerfile
+* Non-root User
+* .dockerignore
+* Image Optimization
+* Security Best Practices
+
+---
+
+# 5. Composite Actions
+
+* Setup Node
+* Cache
+* Install
+* Reusable Inputs
+* Outputs
+
+---
+
+# 6. Java Docker Action
+
+* action.yml
+* Dockerfile
+* pom.xml
+* AWS SDK
+* Upload to S3
+
+---
+
+# 7. Python Docker Action
+
+* action.yml
+* Dockerfile
+* boto3
+* Upload to S3
+
+---
+
+# 8. Artifacts
+
+Upload
+
+Download
+
+Retention
+
+Passing Between Jobs
+
+---
+
+# 9. Cache
+
+npm cache
+
+actions/cache
+
+Restore Keys
+
+Cache Keys
+
+When NOT to cache
+
+---
+
+# 10. Docker Interview Notes
+
+* ENTRYPOINT vs CMD
+* COPY vs ADD
+* ARG vs ENV
+* EXPOSE
+* HEALTHCHECK
+* USER
+* WORKDIR
+* RUN
+* Layers
+* Multi-stage
+
+---
+
+# 11. GitHub Actions Interview Questions
+
+100+ questions with answers.
+
+---
+
+# 12. GitLab Interview Questions
+
+50+ questions with answers.
+
+---
+
+# 13. Docker Interview Questions
+
+150+ questions with answers.
+
+---
+
+# 14. Git Interview Questions
+
+100+ questions with answers.
+
+---
+
+# 15. AWS S3 Upload Actions
+
+Java
+
+Python
+
+Composite
+
+Docker
+
+Reusable
+
+---
+
+# ==========================
+
+# MISTAKES MADE DURING PRACTICE
+
+# ==========================
+
+## Mistake 1
+
+### Error
+
+npm ci failed
+
+### Reason
+
+Missing package-lock.json
+
+### Root Cause
+
+Repository did not contain package-lock.json.
+
+### Solution
+
+Run
 
 ```bash
 npm install
 ```
 
-Commit it.
-
-```bash
-git add package-lock.json
-git commit -m "Added package lock"
-git push
-```
-
----
-
-## Alternative
-
-Use
-
-```yaml
-run: npm install
-```
-
-instead of
-
-```yaml
-run: npm ci
-```
-
----
-
-## Interview Question
-
-**Why is `npm ci` preferred over `npm install` in CI/CD?**
-
-Answer:
-
-* Faster
-* Clean installation
-* Uses exact dependency versions
-* Requires package-lock.json
-* Recommended for CI/CD
-
----
-
-# Issue 2: Jest Not Found
-
-## Error
+Commit
 
 ```text
-'jest' is not recognized as an internal or external command
+package-lock.json
 ```
 
-or
+### Interview Question
 
-```text
-sh: jest: not found
+Difference between
+
+```
+npm install
+```
+
+and
+
+```
+npm ci
 ```
 
 ---
 
-## Cause
+## Mistake 2
 
-Jest was not installed.
+### Error
 
----
+jest not recognized
 
-## Solution
+### Reason
 
-```bash
+Jest not installed
+
+### Solution
+
+```
 npm install --save-dev jest
 ```
 
-Verify
-
-```bash
-npx jest --version
-```
-
 ---
 
-# Issue 3: ESLint Not Found
+## Mistake 3
 
-## Error
+### Error
 
-```text
-eslint: not found
+eslint not recognized
+
+### Reason
+
+Package missing
+
+### Solution
+
 ```
-
-or
-
-```text
-'eslint' is not recognized...
-```
-
----
-
-## Cause
-
-ESLint package was missing.
-
----
-
-## Solution
-
-```bash
 npm install --save-dev eslint
 ```
 
-Verify
-
-```bash
-npx eslint -v
-```
-
 ---
 
-# Issue 4: ESLint Configuration Missing
+## Mistake 4
 
-## Error
+### Error
 
-```text
-ESLint couldn't find an eslint.config.(js|mjs|cjs)
-```
+ESLint Config Missing
 
----
+Reason
 
-## Cause
+Using ESLint v9+
 
-Using ESLint v9+.
-
-Older configuration
-
-```
-.eslintrc.json
-```
-
-is no longer the default.
-
----
-
-## Solution
+Solution
 
 Create
 
@@ -188,113 +279,376 @@ Create
 eslint.config.js
 ```
 
-Example
+instead of
 
-```javascript
-module.exports = [
-  {
-    files: ["**/*.js"],
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "commonjs"
-    },
-    rules: {
-      semi: ["error", "always"],
-      "no-unused-vars": "error"
-    }
-  }
-];
+```
+.eslintrc.json
 ```
 
 ---
 
-# Issue 5: Upload Artifact
+## Mistake 5
 
-## Working Step
+### Error
 
-```yaml
-- name: Upload Artifact
-  uses: actions/upload-artifact@v4
-  with:
-    name: files
-    path: build/
+download-artifacts
+
+### Wrong
+
+```
+actions/download-artifacts
 ```
 
-Successfully uploads
+### Correct
+
+```
+actions/download-artifact
+```
+
+Notice
+
+Artifact
+
+NOT
+
+Artifacts
+
+---
+
+## Mistake 6
+
+Artifact not found
+
+Reason
+
+Artifact name mismatch
+
+Example
+
+Upload
+
+```
+files
+```
+
+Download
+
+```
+build
+```
+
+Names must match exactly.
+
+---
+
+## Mistake 7
+
+No files found
+
+Reason
+
+Wrong upload path
+
+Example
 
 ```
 build/
 ```
 
-as an artifact.
+did not exist.
 
 ---
 
-# Issue 6: Download Artifact Failed
+## Mistake 8
 
-## Error
+Git Commit Failed
 
-```text
-Unable to resolve action actions/download-artifacts
-repository not found
+```
+fatal: no name was given
+```
+
+Reason
+
+user.name
+
+user.email
+
+not configured.
+
+Fix
+
+```
+git config --global user.name
+
+git config --global user.email
 ```
 
 ---
 
-## Cause
+## Mistake 9
 
-Typo.
+Using both
 
-Incorrect
+```
+cache: npm
+```
 
-```yaml
-uses: actions/download-artifacts@v4
+AND
+
+```
+actions/cache
+```
+
+Reason
+
+Duplicate cache strategy.
+
+Recommendation
+
+Use
+
+```
+setup-node
+cache: npm
+```
+
+for Node projects.
+
+---
+
+## Mistake 10
+
+Caching node_modules
+
+Better Practice
+
+Cache
+
+```
+~/.npm
+```
+
+instead.
+
+---
+
+## Mistake 11
+
+No restore keys
+
+Better
+
+```
+restore-keys:
+```
+
+for partial cache matching.
+
+---
+
+## Mistake 12
+
+Hardcoded Node Version
+
+Instead
+
+Use Inputs
+
+```
+node-version
+```
+
+inside Composite Actions.
+
+---
+
+## Mistake 13
+
+No package-lock committed
+
+CI became non-deterministic.
+
+Always commit
+
+```
+package-lock.json
+```
+
+---
+
+## Mistake 14
+
+Not using
+
+```
+needs:
+```
+
+Result
+
+Jobs ran independently.
+
+---
+
+## Mistake 15
+
+No Docker Ignore
+
+Image became larger.
+
+Always create
+
+```
+.dockerignore
+```
+
+---
+
+## Mistake 16
+
+Running Container as Root
+
+Always
+
+```
+USER appuser
+```
+
+---
+
+## Mistake 17
+
+Copying Entire Repository Before npm install
+
+Wrong
+
+```
+COPY . .
+RUN npm install
 ```
 
 Correct
 
-```yaml
-uses: actions/download-artifact@v4
 ```
-
-Notice
-
-```
-download-artifact
-```
-
-NOT
-
-```
-download-artifacts
+COPY package*.json ./
+RUN npm ci
+COPY . .
 ```
 
 ---
 
-# Correct Example
+## Mistake 18
 
-```yaml
-deploy:
-  needs: build
-  runs-on: ubuntu-latest
+Using latest Tag
 
-  steps:
+Wrong
 
-    - name: Download Artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: files
+```
+node:latest
+```
 
-    - name: Show Files
-      run: ls -R
+Correct
+
+```
+node:20-alpine
 ```
 
 ---
 
-# Artifact Flow
+## Mistake 19
+
+Uploading Secrets
+
+Never
+
+Commit
 
 ```
+.env
+
+AWS Keys
+
+Secrets
+```
+
+---
+
+## Mistake 20
+
+Missing .gitignore
+
+Should ignore
+
+```
+node_modules
+coverage
+.env
+dist
+```
+
+---
+
+# Lessons Learned
+
+✓ Always use package-lock.json
+
+✓ Prefer npm ci
+
+✓ Use Multi-stage Docker Builds
+
+✓ Use Composite Actions
+
+✓ Cache Dependencies
+
+✓ Upload Artifacts
+
+✓ Download Artifacts
+
+✓ Use needs
+
+✓ Use Secrets
+
+✓ Pin Action Versions
+
+✓ Use Docker Ignore
+
+✓ Use Non-root User
+
+✓ Never Commit Secrets
+
+✓ Verify Cache Keys
+
+✓ Verify Artifact Names
+
+✓ Test Workflow Locally
+
+✓ Read Error Logs Carefully
+
+✓ Prefer Production Images
+
+✓ Use Least Privilege IAM
+
+✓ Validate Inputs
+
+✓ Make Actions Reusable
+
+---
+
+# Final Pipeline
+
+Developer Push
+
+↓
+
 Checkout
+
+↓
+
+Setup Runtime
+
+↓
+
+Restore Cache
 
 ↓
 
@@ -306,321 +660,23 @@ Lint
 
 ↓
 
-Test
-
-↓
-
-Build
-
-↓
-
-Upload Artifact
-
-↓
-
-Download Artifact
-
-↓
-
-Deploy
-```
-
----
-
-# GitHub Actions Workflow Order
-
-```
-Trigger
-
-↓
-
-checkout
-
-↓
-
-setup-node
-
-↓
-
-npm install / npm ci
-
-↓
-
-npm run lint
-
-↓
-
-npm test
-
-↓
-
-npm run build
-
-↓
-
-upload-artifact
-
-↓
-
-download-artifact
-
-↓
-
-deploy
-```
-
----
-
-# Common GitHub Actions Errors
-
-## Error
-
-```
-npm ci failed
-```
-
-Reason
-
-Missing package-lock.json
-
----
-
-## Error
-
-```
-jest not found
-```
-
-Reason
-
-Jest not installed
-
----
-
-## Error
-
-```
-eslint not found
-```
-
-Reason
-
-ESLint not installed
-
----
-
-## Error
-
-```
-eslint.config.js missing
-```
-
-Reason
-
-Using ESLint v9+
-
----
-
-## Error
-
-```
-download-artifacts repository not found
-```
-
-Reason
-
-Wrong action name
-
----
-
-## Error
-
-```
-Artifact not found
-```
-
-Reason
-
-Artifact name mismatch
-
----
-
-## Error
-
-```
-No files found to upload
-```
-
-Reason
-
-Wrong path
-
-Example
-
-```
-build/
-```
-
-doesn't exist.
-
----
-
-# Best Practices
-
-✅ Always commit
-
-```
-package.json
-package-lock.json
-```
-
-Never commit
-
-```
-node_modules/
-```
-
-Always use
-
-```yaml
-actions/checkout@v4
-```
-
-Always use
-
-```yaml
-actions/setup-node@v4
-```
-
-Prefer
-
-```yaml
-npm ci
-```
-
-for CI/CD.
-
-Use
-
-```
-needs:
-```
-
-for job dependency.
-
-Use artifacts for passing files between jobs.
-
----
-
-# GitHub Actions Interview Questions
-
-### What is a Runner?
-
-A machine that executes GitHub Actions jobs.
-
----
-
-### Difference between Job and Step?
-
-Job
-
-* Runs on a runner
-* Independent
-
-Step
-
-* Executes inside a job
-* Runs sequentially
-
----
-
-### What is an Artifact?
-
-Files generated during one job and used in another job.
-
-Examples
-
-* Build output
-* Reports
-* Coverage
-* ZIP packages
-
----
-
-### Difference
-
-Upload
-
-```yaml
-actions/upload-artifact
-```
-
-Download
-
-```yaml
-actions/download-artifact
-```
-
----
-
-### What is `needs`?
-
-Creates dependency between jobs.
-
-Example
-
-```
-build
-
-↓
-
-deploy
-```
-
-Deploy waits until Build finishes.
-
----
-
-### Difference
-
-`npm install`
-
-* Development
-* Updates lock file
-
-`npm ci`
-
-* CI/CD
-* Faster
-* Clean install
-* Exact versions
-
----
-
-# Final Working Pipeline
-
-```
-Checkout
-
-↓
-
-Setup Node
-
-↓
-
-Install Packages
-
-↓
-
-Lint
-
-↓
-
 Unit Test
 
 ↓
 
+Coverage
+
+↓
+
 Build
+
+↓
+
+Docker Build
+
+↓
+
+Security Scan
 
 ↓
 
@@ -633,17 +689,34 @@ Download Artifact
 ↓
 
 Deploy
-```
+
+↓
+
+Notification
 
 ---
 
-# Key Learnings
+# Final Revision Checklist
 
-* Understand the difference between `npm install` and `npm ci`.
-* Always commit `package-lock.json`.
-* Install Jest and ESLint as development dependencies.
-* ESLint v9+ requires `eslint.config.js`.
-* Use the correct action names (`upload-artifact` and `download-artifact`).
-* Use `needs` to define job dependencies.
-* Pass build outputs between jobs using artifacts.
-* Verify artifact names and paths match exactly.
+* Git
+* GitHub Actions
+* GitLab CI
+* Docker
+* Docker Compose
+* Node.js
+* Java
+* Python
+* AWS S3
+* Composite Actions
+* Docker Actions
+* Artifacts
+* Cache
+* Secrets
+* Runners
+* Jobs
+* Steps
+* Workflow
+* Debugging
+* CI/CD Best Practices
+* Common Errors
+* Interview Questions

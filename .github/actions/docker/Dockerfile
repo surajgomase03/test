@@ -6,7 +6,9 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY entrypoint.sh .
+
+COPY upload.py .
 
 RUN chmod 777 *.sh
 
